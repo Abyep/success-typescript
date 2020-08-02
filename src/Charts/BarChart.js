@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react"
 import { Chart } from "react-google-charts"
+import "./chart.css"
 
 const BarChart = (props) => {
 const [data, setData] = useState([])
@@ -10,11 +11,42 @@ const [data, setData] = useState([])
 
 
     return (
-      <div className="App">
+      <div className="box">
         <Chart
-          width={"60vw"}
-          height={"50vh"}
+          width={"100%"}
+          height={"100%"}
           chartType="BarChart"
+
+
+          options={{
+            // title: 'Population of Largest U.S. Cities',
+            hAxis: {
+              title: 'Total Population',
+              minValue: 0,
+            },
+            vAxis: {
+              title: 'Country',
+            },
+          }}
+          controls={[
+            {
+              controlEvents: [
+                {
+                  eventName: 'statechange',
+                },
+              ],
+              controlType: 'CategoryFilter',
+              options: {
+                filterColumnIndex: 1,
+                ui: {
+                  labelStacking: 'vertical',
+                  label: 'Country Selection:',
+                  allowTyping: false,
+                  allowMultiple: false,
+                },
+              },
+            },
+          ]}
           data={data}
           mapsApiKey="YOUR_KEY_HERE"
           rootProps={{ "data-testid": "1" }}

@@ -15,25 +15,7 @@ const Sidebar = (props) => {
             onClick={() => props.handleNavigation(2)}
             className="sidebar-detail"
           >
-            Line Graph
-          </div>
-          <div
-            onClick={() => props.handleNavigation(4)}
-            className="sidebar-detail"
-          >
-            Pie Graph
-          </div>
-          <div
-            onClick={() => props.handleNavigation(3)}
-            className="sidebar-detail"
-          >
-            Geo Graph
-          </div>
-          <div
-            onClick={() => props.handleNavigation(1)}
-            className="sidebar-detail"
-          >
-            Bar Graph
+            Dashboard
           </div>
         </div>
       </>

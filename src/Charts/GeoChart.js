@@ -10,10 +10,10 @@ const GeoChart = (props) => {
   
 
     return (
-      <div className="App">
-        <Chart
-          width={"60vw"}
-          height={"50vh"}
+      <div className="box">
+      <Chart
+        width={"100%"}
+        height={"100%"}
           chartType="GeoChart"
           data={data}
           mapsApiKey="YOUR_KEY_HERE"

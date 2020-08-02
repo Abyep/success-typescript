@@ -1,5 +1,5 @@
-import React, { Component } from "react"
-import { connect } from "react-redux"
+import React, { Component, useEffect } from "react"
+import { connect, useSelector, RootStateOrAny } from "react-redux"
 import "./App.css"
 import LineChart from "./Charts/LineChart"
 import PieChart from "./Charts/PieChart"
@@ -11,90 +11,69 @@ import SideBar from "./Sidebar"
 import Header from "./Header"
 import { getData } from "./Saga"
 
-interface ChartProps{
-  data : Array<String>;
-  option : Number,
-  sideDrawerOpen:Boolean,
-  getData : Function
+
+
+export const App   = (props : any) => {
+  const newData = useSelector((state :RootStateOrAny) => state.reducer.data);
+const [option, setOption] = React.useState<Number | undefined>(1)
+
+const [sideDrawerOpen, setSideDrawerOpen] = React.useState<boolean | undefined | null>(true)
+
+useEffect(() => {
+  props.getData()
+},[])
+
+
+const handleNavigation = (param : Number) => {
+setOption(param)
 }
 
-interface ChartState {
-  data : Array<String>;
-  option : Number,
-  sideDrawerOpen:Boolean,
 
+
+const backdropClickHandler = () => {
+  setSideDrawerOpen(!sideDrawerOpen)
 }
 
-class App extends Component< ChartProps, ChartState> {
-  constructor(props : ChartProps ) {
-    super(props)
-    this.state = {
-      data: [],
-      option: 1,
-      sideDrawerOpen:true
-    }
-  }
+   return (   <div className="App">
+      <Header backdropClickHandler={backdropClickHandler} show={sideDrawerOpen}   handleNavigation={(option : Number) => handleNavigation(option)} />
+        {newData && newData.length !== 0 && (
+          <div
+            style={{
+              display: "flex",
+              flex: 1,
+              flexDirection:"column",
+              marginTop :"10%",
+              marginLeft :"15%"
+            }}
+          >
+            <strong> World census of use of tobacco products</strong>
+       
 
-  componentDidMount() {
-    this.props.getData()
-  }
-  static getDerivedStateFromProps(nextProps : any, prevState : any) {
-    if (nextProps.data !== null) {
-      return { data: nextProps.data }
-    } else return null
-  }
-
-  handleNavigation = (param : Number) => {
-    this.setState({
-      option: param,
-    })
-  }
-
-   drawerToggleClickHandler = () => {
-    this.setState({
-     sideDrawerOpen: !this.state.sideDrawerOpen 
-    })
-  }
-
-  backdropClickHandler = () => {
-    this.setState({ sideDrawerOpen: !this.state.sideDrawerOpen  })
-  }
-
-  render() {
-    return (
-      <div className="App">
-        <Header backdropClickHandler={this.backdropClickHandler} show={this.state.sideDrawerOpen}   handleNavigation={(option : Number) => this.handleNavigation(option)} />
-        <div style={{ display: "flex", flexDirection: "row", flex: 1 }}>
-          {this.state.data.length !== 0 && (
-            <div
-              style={{
-                display: "flex",
-                flex: 1,
-                justifyContent: "space-evenly",
-                alignItems: "center",
-                flexDirection: "column",
-                marginTop :"10%"
-              }}
-            >
-              <strong> World census of use of tobacco products</strong>
-              {this.state.option === 1 && <BarChart data={this.state.data} />}
-              {this.state.option === 2 && <LineChart data={this.state.data} />}
-              {this.state.option === 3 && <GeoChart data={this.state.data} />}
-              {this.state.option === 4 && <PieChart data={this.state.data} />}
+            <div className="homepageMainDiv">
+            <BarChart data={newData}/>
+            <LineChart data={newData} />
+            <GeoChart data={newData} />
+            <PieChart data={newData} />
             </div>
-          )}
-        </div>
-      </div>
+
+          </div>
+        )}
+    </div>
     )
-  }
-}
+
+
+
+          }
+
+
+
 const mapDisPatchToProps= (dispatch : any) => {
 return {
   getData : () => dispatch(getData())
 }
 }
 
-const mapStateToProps = (state : any) => {
+const mapStateToProps = (state : RootStateOrAny) => {
   return {
     data: state.reducer.data,
   }
