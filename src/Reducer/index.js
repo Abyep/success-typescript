@@ -1,8 +1,9 @@
-import { SAVE_DATA } from "../Saga/index";
+import { SAVE_DATA, OPEN_SIDEBAR } from "../Saga/index"
 
 const initialState = {
-data : null
-};
+  data: null,
+  sidebar: false,
+}
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -10,12 +11,19 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         data: action.data,
-
-      };
+      }
     }
-    default:
-      return state;
-  }
-};
 
-export default reducer;
+    case OPEN_SIDEBAR: {
+      return {
+        ...state,
+        sidebar: !state.sidebar,
+      }
+    }
+
+    default:
+      return state
+  }
+}
+
+export default reducer

@@ -35,7 +35,6 @@ const backdropClickHandler = () => {
 }
 
    return (   <div className="App">
-      <Header backdropClickHandler={backdropClickHandler} show={sideDrawerOpen}   handleNavigation={(option : Number) => handleNavigation(option)} />
         {newData && newData.length !== 0 && (
           <div
             style={{

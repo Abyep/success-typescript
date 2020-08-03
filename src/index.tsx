@@ -9,7 +9,7 @@ import { Provider } from "react-redux"
 import createSagaMiddleware from "redux-saga";
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-
+import Header from "./Header/index"
 
 
 const sagaMiddleware = createSagaMiddleware();
@@ -21,13 +21,31 @@ const rootReducer = combineReducers({
 const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
 sagaMiddleware.run(rootSaga);
 
+
+
+const appLayout = (props : any, Component : any) => {
+  return (
+    <React.Fragment>
+      <React.Fragment>
+      <Header props={props}/>
+ 
+        <div>
+          <Component {...props}></Component>
+        </div>
+       
+      </React.Fragment>
+    </React.Fragment>
+  )
+}
 ReactDOM.render(
   <Provider store={store}>
     <Router>
       <Suspense fallback={<div></div>}>
         <Switch>
-          <Route path="/home" exact component={App} />
-          <Route path="*" component={App} />
+          <Route path="/home" exact
+          render={props => appLayout(props, App)}
+    />
+          <Route path="*"  render={props => appLayout(props, App)} />
         </Switch>
       </Suspense>
     </Router>

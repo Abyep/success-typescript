@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react"
 import { Chart } from "react-google-charts"
 import "./chart.css"
 
-const BarChart = (props) => {
+export const BarChart   = (props) => {
 const [data, setData] = useState([])
 
   useEffect(() => {
@@ -19,7 +19,6 @@ const [data, setData] = useState([])
 
 
           options={{
-            // title: 'Population of Largest U.S. Cities',
             hAxis: {
               title: 'Total Population',
               minValue: 0,

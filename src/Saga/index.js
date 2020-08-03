@@ -3,13 +3,17 @@ import api from "../Api/index.js";
 
 export const GET_DATA = "GET_DATA";
 export const SAVE_DATA = "SAVE_DATA";
+export const OPEN_SIDEBAR = "OPEN_SIDEBAR"
 
 export const getData = (payload) => ({
   type: "GET_DATA",
   payload,
 });
 
-
+export const openSidebar = (payload) =>({
+  type:'OPEN_SIDEBAR',
+  payload
+})
 
 export default function* rootSaga() {
   yield takeLatest("GET_DATA", handleGetJobs);
