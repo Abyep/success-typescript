@@ -15,24 +15,13 @@ import { getData } from "./Saga"
 
 export const App   = (props : any) => {
   const newData = useSelector((state :RootStateOrAny) => state.reducer.data);
-const [option, setOption] = React.useState<Number | undefined>(1)
 
-const [sideDrawerOpen, setSideDrawerOpen] = React.useState<boolean | undefined | null>(true)
 
 useEffect(() => {
   props.getData()
 },[])
 
 
-const handleNavigation = (param : Number) => {
-setOption(param)
-}
-
-
-
-const backdropClickHandler = () => {
-  setSideDrawerOpen(!sideDrawerOpen)
-}
 
    return (   <div className="App">
         {newData && newData.length !== 0 && (
